@@ -33,3 +33,5 @@ app.listen(PORT, () => {
     console.log(`  🔧 Admin: http://localhost:${PORT}/admin?pw=anterin2026`);
     console.log(`  ───────────────────────────────\n`);
 });
+
+module.exports = app;

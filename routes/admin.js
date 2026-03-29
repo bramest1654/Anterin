@@ -35,9 +35,9 @@ router.get('/', authCheck, (req, res) => {
 });
 
 // GET /api/admin/stats
-router.get('/api/stats', authCheck, (req, res) => {
+router.get('/api/stats', authCheck, async (req, res) => {
     try {
-        const stats = getStats();
+        const stats = await getStats();
         res.json({ success: true, ...stats });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
@@ -45,9 +45,9 @@ router.get('/api/stats', authCheck, (req, res) => {
 });
 
 // GET /api/admin/bookings
-router.get('/api/bookings', authCheck, (req, res) => {
+router.get('/api/bookings', authCheck, async (req, res) => {
     try {
-        const bookings = getAllBookings();
+        const bookings = await getAllBookings();
         res.json({ success: true, bookings });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
@@ -55,7 +55,7 @@ router.get('/api/bookings', authCheck, (req, res) => {
 });
 
 // PATCH /api/admin/bookings/:id — update status
-router.patch('/api/bookings/:id', authCheck, (req, res) => {
+router.patch('/api/bookings/:id', authCheck, async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
@@ -65,9 +65,9 @@ router.patch('/api/bookings/:id', authCheck, (req, res) => {
         }
 
         if (status === 'cancelled') {
-            cancelBooking(parseInt(id));
+            await cancelBooking(parseInt(id));
         } else {
-            updateBookingStatus(parseInt(id), status);
+            await updateBookingStatus(parseInt(id), status);
         }
 
         res.json({ success: true });
@@ -77,11 +77,11 @@ router.patch('/api/bookings/:id', authCheck, (req, res) => {
 });
 
 // POST /api/admin/block-date
-router.post('/api/block-date', authCheck, (req, res) => {
+router.post('/api/block-date', authCheck, async (req, res) => {
     try {
         const { date, reason } = req.body;
         if (!date) return res.status(400).json({ success: false, error: 'Tanggal wajib diisi.' });
-        blockDate(date, reason || 'manual');
+        await blockDate(date, reason || 'manual');
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
@@ -89,9 +89,9 @@ router.post('/api/block-date', authCheck, (req, res) => {
 });
 
 // DELETE /api/admin/block-date/:date
-router.delete('/api/block-date/:date', authCheck, (req, res) => {
+router.delete('/api/block-date/:date', authCheck, async (req, res) => {
     try {
-        unblockDate(req.params.date);
+        await unblockDate(req.params.date);
         res.json({ success: true });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
@@ -99,10 +99,10 @@ router.delete('/api/block-date/:date', authCheck, (req, res) => {
 });
 
 // GET /api/admin/blocked/:year/:month
-router.get('/api/blocked/:year/:month', authCheck, (req, res) => {
+router.get('/api/blocked/:year/:month', authCheck, async (req, res) => {
     try {
         const { year, month } = req.params;
-        const blockedDates = getBlockedDatesForMonth(parseInt(year), parseInt(month));
+        const blockedDates = await getBlockedDatesForMonth(parseInt(year), parseInt(month));
         res.json({ success: true, blockedDates });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
