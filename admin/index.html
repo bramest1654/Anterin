@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anterin Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="admin-logo">Anterin<span>.</span> Admin</div>
+            <a href="/" class="btn-back"><i class="fa-solid fa-arrow-left"></i> App</a>
+        </header>
+
+        <!-- Stats Cards -->
+        <section class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotal">-</div>
+                <div class="stat-label">Total Booking</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statMonth">-</div>
+                <div class="stat-label">Bulan Ini</div>
+            </div>
+            <div class="stat-card accent">
+                <div class="stat-value" id="statPending">-</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-value" id="statConfirmed">-</div>
+                <div class="stat-label">Confirmed</div>
+            </div>
+        </section>
+
+        <!-- Calendar Block Manager -->
+        <section class="admin-section">
+            <h2><i class="fa-solid fa-calendar-days"></i> Kelola Ketersediaan</h2>
+            <div class="calendar-widget">
+                <div class="cal-header">
+                    <button id="calPrev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span id="calMonthYear"></span>
+                    <button id="calNext"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="cal-days-header">
+                    <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
+                </div>
+                <div class="cal-grid" id="calGrid"></div>
+            </div>
+            <p class="cal-hint">Klik tanggal untuk block/unblock. <span class="blocked-indicator"></span> = Terblokir</p>
+        </section>
+
+        <!-- Bookings Table -->
+        <section class="admin-section">
+            <h2><i class="fa-solid fa-clipboard-list"></i> Daftar Booking</h2>
+            <div class="table-wrapper" id="bookingsTable">
+                <p class="loading">Memuat data...</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

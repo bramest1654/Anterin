@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+npm-debug.log
+
+# Mac OS OS Files
+.DS_Store
+
+# Environment Variables
+.env
+
+# SQLite Databases (prevent overwriting production with local test data)
+*.db
+*.sqlite
+*.sqlite3
+db/*.db
+data/
+
+# Logs
+logs/
