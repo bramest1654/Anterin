@@ -2,17 +2,10 @@ services:
   - type: web
     name: anterin-backend
     env: node
-    plan: free # Can be updated later
-    region: singapore # Closest to Indonesia for low latency
+    plan: free
+    region: singapore
     buildCommand: npm install
     startCommand: node server.js
-    disk:
-      name: anterin-db-storage
-      mountPath: /data # SQLite DB will be stored in this persistent folder
-      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DATABASE_PATH
-        value: /data/anterin.db # Dynamic override to use persistent disk
-      # You can add the ADMIN_PASSWORD manually in the Render dashboard
