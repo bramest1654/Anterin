@@ -16,6 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static frontend files (index.html, style.css, script.js)
 app.use(express.static(path.join(__dirname)));
 
+// VERCEL FIX: Explicitly serve index.html for the root route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Serve admin static files (admin.css, admin.js)
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
@@ -34,4 +39,5 @@ app.listen(PORT, () => {
     console.log(`  ───────────────────────────────\n`);
 });
 
+// Export for Vercel
 module.exports = app;
