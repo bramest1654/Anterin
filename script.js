@@ -1,4 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 00. Premium Intro Screen Logic
+    const introScreen = document.getElementById('intro-screen');
+    const introSessionKey = 'anterin_intro_done_v1';
+
+    if (introScreen) {
+        if (!sessionStorage.getItem(introSessionKey)) {
+            // First time in this session: Show intro
+            introScreen.style.display = 'flex';
+            
+            // Lock scroll during intro
+            document.body.style.overflow = 'hidden';
+
+            // Start exit sequence after 3s (entrance animations are CSS-driven)
+            setTimeout(() => {
+                introScreen.classList.add('hide');
+                
+                // Allow scroll again
+                document.body.style.overflow = '';
+
+                // Fully remove from display after fade-out transition (1s)
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                }, 1000);
+
+                // Mark session as done
+                sessionStorage.setItem(introSessionKey, 'true');
+            }, 3000);
+        } else {
+            // Already seen in this session: Skip intro
+            introScreen.style.display = 'none';
+        }
+    }
+
     // 0. Dynamic Greeting
     const greetingEl = document.getElementById('dynamicGreeting');
     if (greetingEl) {
@@ -7,7 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (hour >= 5 && hour < 11) greeting = 'Selamat Pagi';
         else if (hour >= 11 && hour < 15) greeting = 'Selamat Siang';
         else if (hour >= 15 && hour < 18) greeting = 'Selamat Sore';
-        greetingEl.textContent = `${greeting}, Kak!`;
+        greetingEl.textContent = `${greeting}.`;
+        // Sub-tagline
+        const greetingSub = document.getElementById('dynamicGreetingSub');
+        if (greetingSub) greetingSub.textContent = 'Ke mana tujuan Anda hari ini?';
     }
 
     // 1. Onboarding Logic
@@ -73,15 +109,70 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Tanya Foto WhatsApp Logic
+    // 2. Lightbox Gallery Logic (Premium Upgrade)
     const btnTanyaFoto = document.getElementById('btnTanyaFoto');
-    if (btnTanyaFoto) {
-        btnTanyaFoto.addEventListener('click', () => {
-            const adminNumber = '6281227539199';
-            // Explicit message as requested
-            const message = "Halo Admin Anterin! 👋\nSaya tertarik dengan Innova Zenix-nya. Boleh minta tolong dikirimkan foto-foto asli kondisi luar dan dalam mobilnya? Terima kasih!";
-            const encoded = encodeURIComponent(message);
-            window.open(`https://wa.me/${adminNumber}?text=${encoded}`, '_blank');
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    const lightboxClose = document.getElementById('lightboxClose');
+    
+    if (btnTanyaFoto && lightboxOverlay) {
+        const lightboxImgs = document.querySelectorAll('.lightbox-img');
+        const lightboxIndicators = document.querySelectorAll('.indicator');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+        let currentImgIndex = 0;
+
+        function updateLightbox(index) {
+            lightboxImgs.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+                if (lightboxIndicators[i]) {
+                    lightboxIndicators[i].classList.toggle('active', i === index);
+                }
+            });
+        }
+
+        // Open Lightbox on Button Click
+        btnTanyaFoto.addEventListener('click', (e) => {
+            e.preventDefault();
+            lightboxOverlay.classList.remove('hidden');
+            // Small timeout to allow the browser to paint 'display' before 'opacity' transition
+            setTimeout(() => {
+                lightboxOverlay.classList.add('active');
+            }, 10);
+            updateLightbox(currentImgIndex);
+        });
+
+        // Close Logic
+        lightboxClose.addEventListener('click', () => {
+            lightboxOverlay.classList.remove('active');
+            setTimeout(() => {
+                lightboxOverlay.classList.add('hidden');
+            }, 400); // 400ms matches CSS transition
+        });
+
+        // Click outside to close
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) {
+                lightboxClose.click();
+            }
+        });
+
+        // Carousel Navigasi
+        lightboxNext.addEventListener('click', () => {
+            currentImgIndex = (currentImgIndex + 1) % lightboxImgs.length;
+            updateLightbox(currentImgIndex);
+        });
+
+        lightboxPrev.addEventListener('click', () => {
+            currentImgIndex = (currentImgIndex - 1 + lightboxImgs.length) % lightboxImgs.length;
+            updateLightbox(currentImgIndex);
+        });
+
+        // Indicator Sync
+        lightboxIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentImgIndex = index;
+                updateLightbox(currentImgIndex);
+            });
         });
     }
 
@@ -264,6 +355,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const namaLengkap = document.getElementById('namaLengkap').value.trim();
             const tglMulai = document.getElementById('tglMulai').value;
             const tglSelesai = document.getElementById('tglSelesai').value;
+            const jamMulai = document.getElementById('jamMulai').value || '08:00';
+            const jamSelesai = document.getElementById('jamSelesai').value || '17:00';
             const lokasiJemput = document.getElementById('lokasi').value.trim();
             const adminTujuan = document.getElementById('adminTujuan').value;
 
@@ -299,13 +392,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Construct new WhatsApp Template
+            // Format tanggal ke format Indonesia yang enak dibaca
+            const formatTanggal = (dateStr) => {
+                const bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+                const d = new Date(dateStr + 'T00:00:00');
+                return `${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+            };
+
+            const tglMulaiFormatted = formatTanggal(tglMulai);
+            const tglSelesaiFormatted = formatTanggal(tglSelesai);
+
+            // Construct WhatsApp Template dengan info Jam
             const waMessage = `Halo Admin Anterin! 👋
 Saya ingin memesan layanan Sewa Innova Zenix Tipe G Bensin beserta Sopir (Pak Surono).
 
 Berikut detail pesanan saya:
 👤 Nama: ${namaLengkap}
-📅 Tanggal: ${tglMulai} s/d ${tglSelesai}
+📅 Tanggal: ${tglMulaiFormatted} (Jam ${jamMulai}) s/d ${tglSelesaiFormatted} (Jam ${jamSelesai})
 📍 Lokasi Jemput: ${lokasiJemput}
 
 Mohon info ketersediaan jadwal dan instruksi pembayaran DP. Terima kasih! 🙏`;
@@ -348,3 +451,113 @@ Mohon info ketersediaan jadwal dan instruksi pembayaran DP. Terima kasih! 🙏`;
         });
     }
 });
+
+// =========================================================
+// GPS CURRENT LOCATION BUTTON
+// =========================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const btnGPS = document.getElementById('btnGPS');
+    const lokasiInput = document.getElementById('lokasi');
+
+    if (btnGPS && lokasiInput) {
+        btnGPS.addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                alert('Browser Anda tidak mendukung fitur GPS.');
+                return;
+            }
+
+            // State: loading
+            btnGPS.classList.add('loading');
+            btnGPS.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const latLng = { lat: latitude, lng: longitude };
+
+                    // Gunakan SDK google.maps.Geocoder (sudah ter-load, tanpa fetch/CORS)
+                    const geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({ location: latLng, language: 'id' }, (results, status) => {
+                        if (status === 'OK' && results && results.length > 0) {
+                            // Ambil hasil terlengkap (biasanya index 0)
+                            lokasiInput.value = results[0].formatted_address;
+                        } else {
+                            // Fallback: koordinat mentah jika geocoder gagal
+                            lokasiInput.value = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+                            console.warn('Geocoder gagal:', status);
+                        }
+                        lokasiInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        btnGPS.classList.remove('loading');
+                        btnGPS.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+                    });
+                },
+                (error) => {
+                    btnGPS.classList.remove('loading');
+                    btnGPS.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+                    const msgs = {
+                        1: 'Izin lokasi ditolak. Mohon izinkan akses lokasi di browser.',
+                        2: 'Lokasi tidak dapat ditentukan. Coba lagi.',
+                        3: 'Permintaan lokasi timeout. Coba lagi.'
+                    };
+                    alert(msgs[error.code] || 'Gagal mendapatkan lokasi.');
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+
+        });
+    }
+});
+
+// =========================================================
+// GOOGLE PLACES AUTOCOMPLETE ENGINE
+// Callback dipanggil otomatis setelah Google Maps API selesai load
+// =========================================================
+function initGooglePlaces() {
+    // Tunggu sampai DOM benar-benar siap dan input dapat berinteraksi
+    const tryInit = () => {
+        const lokasiInput = document.getElementById('lokasi');
+        if (!lokasiInput) return; // elemen belum ada, skip
+
+        // Pastikan google.maps.places tersedia
+        if (typeof google === 'undefined' || !google.maps || !google.maps.places) return;
+
+        const autocomplete = new google.maps.places.Autocomplete(lokasiInput, {
+            componentRestrictions: { country: 'id' },
+            fields: ['formatted_address', 'name'],
+            bounds: new google.maps.LatLngBounds(
+                new google.maps.LatLng(-7.1167, 110.2000),
+                new google.maps.LatLng(-6.9000, 110.5000)
+            ),
+            strictBounds: false
+        });
+
+        // Jangan biarkan Google Maps intercept Enter key di form
+        lokasiInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') e.stopPropagation();
+        });
+
+        // Tangkap lokasi yang dipilih dari dropdown
+        autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+            let selectedAddress = '';
+
+            if (place && place.formatted_address) {
+                selectedAddress = place.formatted_address;
+            } else if (place && place.name) {
+                selectedAddress = place.name;
+            }
+
+            if (selectedAddress) {
+                lokasiInput.value = selectedAddress;
+                lokasiInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        });
+    };
+
+    // Delay kecil untuk pastikan DOM + Google SDK fully mounted
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(tryInit, 100));
+    } else {
+        setTimeout(tryInit, 100);
+    }
+}

@@ -5,20 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title> Anterin | Sewa Innova Zenix Semarang</title>
-    <!-- Fonts: Plus Jakarta Sans for a modern, clean look -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap"
         rel="stylesheet">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <div id="intro-screen" class="intro-screen" style="display: none;">
+        <div class="intro-content">
+            <img src="logo.png" alt="Anterin Logo" class="intro-logo">
+            <span class="intro-tagline">Duduk Tenang, Kami Antarkan</span>
+        </div>
+    </div>
+
     <div class="app-container">
-        <!-- Onboarding Overlay -->
         <div id="onboardingOverlay" class="onboarding-overlay" style="display: none;">
             <div class="onboarding-slides-container">
-                <!-- Slide 1 -->
                 <div class="onboarding-slide active">
                     <div class="slide-icon"><i class="fa-solid fa-car"></i></div>
                     <div class="slide-content">
@@ -26,7 +30,6 @@
                         <p>Solusi perjalanan premium Anda di Semarang.</p>
                     </div>
                 </div>
-                <!-- Slide 2 -->
                 <div class="onboarding-slide">
                     <div class="slide-icon"><i class="fa-solid fa-gem"></i></div>
                     <div class="slide-content">
@@ -34,7 +37,6 @@
                         <p>Armada Innova Zenix Tipe G Bensin terawat, lengkap dengan sopir profesional.</p>
                     </div>
                 </div>
-                <!-- Slide 3 -->
                 <div class="onboarding-slide">
                     <div class="slide-icon"><i class="fa-solid fa-paper-plane"></i></div>
                     <div class="slide-content">
@@ -53,196 +55,249 @@
                 <button id="btnNextOnboarding" class="btn btn-onboarding">Lanjut</button>
             </div>
         </div>
-        <!-- Header -->
         <header class="header">
-            <div class="logo">Anterin<span>.</span></div>
+            <div class="brand-container">
+                <img src="logo.png" alt="Anterin Logo" class="brand-logo">
+                <span class="brand-tagline">Duduk Tenang, Kami Antarkan</span>
+            </div>
             <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
                 <i class="fa-solid fa-moon"></i>
             </button>
         </header>
 
         <main class="main-content">
-            <!-- Hero Section -->
-            <section class="hero immersive-hero">
-                <!-- Top Section: Dynamic Greeting & Title -->
-                <div class="hero-header-text">
-                    <div class="greeting-wrapper">
-                        <span id="dynamicGreeting" class="dynamic-greeting">Selamat Pagi, Kak!</span>
-                    </div>
-                    <h1 class="main-hero-title">Perjalanan Premium Anda</h1>
-                    <p class="main-hero-subtitle">Sewa Innova Zenix untuk kenyamanan bisnis dan keluarga di Semarang.
-                    </p>
-                </div>
-
-                <!-- Center Section: Blended Car Photo -->
-                <div class="immersive-image-container">
-                    <div class="photo-blend-wrapper">
-                        <img src="foto_mobil.png" alt="Innova Zenix Tipe G Bensin" class="hero-img-blended">
-                    </div>
-
-                    <!-- Floating Detail Tag below car photo -->
-                    <div class="floating-detail-tag">
-                        <i class="fa-solid fa-circle-info"></i> Toyota Innova Zenix 2.0 G Bensin CVT 2025
-                    </div>
-                </div>
-
-                <!-- Below Photo Section: Tanya Asli -->
-                <div class="tanya-foto-wrapper">
-                    <button id="btnTanyaFoto" class="btn-tanya-foto">
-                        <i class="fa-solid fa-camera"></i> Lihat Foto Fisik Asli Mobil
-                    </button>
-                </div>
-
-                <!-- Strict Rental Rule Badge - Prominent UI -->
-                <div class="strict-rule-badge">
-                    <div class="badge-icon"><i class="fa-solid fa-user-shield"></i></div>
-                    <div class="badge-text">
-                        <strong>Hanya Dengan Sopir</strong>
-                        <span>(Tidak melayani lepas kunci)</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Specs Section -->
-            <section class="section specs-section">
-                <div class="price-card">
-                    <div class="price-title">Harga Sewa / Hari</div>
-                    <div class="price-amount">Rp 800.000</div>
-                </div>
-
-                <div class="specs-grid">
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fa-solid fa-gas-pump"></i></div>
-                        <span>Mesin Bensin</span>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fa-solid fa-users"></i></div>
-                        <span>7-Seater</span>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fa-solid fa-suitcase"></i></div>
-                        <span>Bagasi Luas</span>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fa-solid fa-snowflake"></i></div>
-                        <span>AC Dingin</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Driver Profile Section -->
-            <section class="section driver-profile">
-                <h2 class="section-title">Profil Sopir Kami</h2>
-                <div class="card driver-card">
-                    <div class="driver-header">
-                        <div class="driver-avatar">
-                            <i class="fa-solid fa-user-tie"></i>
+            <div class="desktop-left-column">
+                <section class="hero immersive-hero">
+                    <div class="hero-header-text">
+                        <div class="greeting-wrapper">
+                            <span id="dynamicGreeting" class="dynamic-greeting">Selamat Pagi</span>
+                            <span id="dynamicGreetingSub" class="dynamic-greeting-sub">Ke mana tujuan Anda hari
+                                ini?</span>
                         </div>
-                        <div class="driver-info">
-                            <h3 class="driver-name">Pak Surono</h3>
-                            <div class="driver-rating">
-                                <span class="rating-score">5.0</span>
-                                <i class="fa-solid fa-star"></i>
-                                <span class="rating-detail">(10+ Tahun Pengalaman)</span>
-                            </div>
-                        </div>
+                        <h1 class="main-hero-title">Perjalanan Premium Anda</h1>
+                        <p class="main-hero-subtitle">Sewa Innova Zenix untuk kenyamanan bisnis dan keluarga di
+                            Semarang.
+                        </p>
                     </div>
-                    <div class="driver-desc">
-                        <p>"Berpengalaman lebih dari 10 tahun melayani tamu VIP dan perjalanan bisnis. Sangat hafal rute
-                            dalam dan luar kota Semarang. Mengutamakan kelancaran, keselamatan, serta kenyamanan
-                            penumpang. Selalu tampil rapi, ramah, dan tepat waktu."</p>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Interactive Calendar Section -->
-            <section class="section calendar-section">
-                <h2 class="section-title">Ketersediaan Jadwal</h2>
-                <div class="card calendar-card">
-                    <div class="cal-header">
-                        <button type="button" id="frontCalPrev" aria-label="Bulan sebelumnya"><i
-                                class="fa-solid fa-chevron-left"></i></button>
-                        <span id="frontCalMonthYear">Maret 2026</span>
-                        <button type="button" id="frontCalNext" aria-label="Bulan selanjutnya"><i
-                                class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div class="cal-days-header">
-                        <div>Min</div>
-                        <div>Sen</div>
-                        <div>Sel</div>
-                        <div>Rab</div>
-                        <div>Kam</div>
-                        <div>Jum</div>
-                        <div>Sab</div>
-                    </div>
-                    <div class="cal-grid" id="frontCalGrid">
-                        <!-- Filled by JS -->
-                    </div>
-                    <div class="cal-legend">
-                        <div class="legend-item"><span class="legend-box available"></span> Tersedia</div>
-                        <div class="legend-item"><span class="legend-box blocked"></span> Terisi</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Booking Section -->
-            <section class="section booking-section">
-                <h2 class="section-title">Jadwalkan Perjalanan</h2>
-                <div class="card booking-card">
-                    <form id="bookingForm" class="booking-form">
-                        <div class="form-group">
-                            <label for="namaLengkap">Nama Lengkap</label>
-                            <input type="text" id="namaLengkap" placeholder="Masukkan nama Anda" required>
+                    <div class="immersive-image-container">
+                        <div class="photo-blend-wrapper">
+                            <img src="foto_mobil.png" alt="Innova Zenix Tipe G Bensin" class="hero-img-blended">
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="tglMulai">Tanggal Mulai</label>
-                                <input type="date" id="tglMulai" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="tglSelesai">Tanggal Selesai</label>
-                                <input type="date" id="tglSelesai" required>
-                            </div>
+                        <div class="floating-detail-tag">
+                            <i class="fa-solid fa-circle-info"></i> Toyota Innova Zenix 2.0 G Bensin CVT 2025
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="lokasi">Lokasi Jemput</label>
-                            <input type="text" id="lokasi" list="lokasi-options"
-                                placeholder="Pilih atau ketik lokasi jemput..." required autocomplete="off">
-                            <datalist id="lokasi-options">
-                                <option value="Garasi Anterin"></option>
-                                <option value="Bandara Ahmad Yani"></option>
-                                <option value="Stasiun Tawang"></option>
-                            </datalist>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="adminTujuan">Pilih Admin yang Dihubungi</label>
-                            <div class="select-wrapper">
-                                <select id="adminTujuan" required>
-                                    <option value="6281227539199" selected>Admin 1 (Ibu Ratih)</option>
-                                    <option value="6281226089112">Admin 2 (Bramastha)</option>
-                                </select>
-                                <i class="fa-solid fa-chevron-down select-icon"></i>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-whatsapp">
-                            <i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp
+                    <div class="tanya-foto-wrapper">
+                        <button id="btnTanyaFoto" class="btn-tanya-foto">
+                            <i class="fa-solid fa-camera"></i> Lihat Foto Fisik Asli Mobil
                         </button>
-                        <p class="payment-disclaimer">Pembayaran aman dilakukan setelah konfirmasi jadwal melalui
-                            WhatsApp.</p>
-                    </form>
-                </div>
-            </section>
+                    </div>
+
+                    <div class="strict-rule-badge">
+                        <div class="badge-icon"><i class="fa-solid fa-user-shield"></i></div>
+                        <div class="badge-text">
+                            <strong>Hanya Dengan Sopir</strong>
+                            <span>(Tidak melayani lepas kunci)</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section specs-section">
+                    <div class="price-card">
+                        <div class="price-title">Harga Sewa / Hari</div>
+                        <div class="price-amount">Rp 800.000</div>
+                    </div>
+
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fa-solid fa-gas-pump"></i></div>
+                            <span>Irit BBM</span>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fa-solid fa-users"></i></div>
+                            <span>7-Seater</span>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fa-solid fa-suitcase"></i></div>
+                            <span>Bagasi Luas</span>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fa-solid fa-snowflake"></i></div>
+                            <span>AC Dingin</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section driver-profile">
+                    <h2 class="section-title">Profil Sopir Kami</h2>
+                    <div class="card driver-card">
+                        <div class="driver-header">
+                            <div class="driver-avatar">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div class="driver-info">
+                                <h3 class="driver-name">Pak Surono</h3>
+                                <div class="driver-rating">
+                                    <span class="rating-score">5.0</span>
+                                    <i class="fa-solid fa-star"></i>
+                                    <span class="rating-detail">(10+ Tahun Pengalaman)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="driver-desc">
+                            <p>Berpengalaman lebih dari 10 tahun melayani perjalanan VIP bisnis maupun liburan keluarga.
+                                Sangat hafal rute dalam dan luar kota, termasuk rekomendasi spot kuliner dan destinasi
+                                terbaik di Semarang. Mengutamakan kelancaran, keselamatan, serta kenyamanan seluruh
+                                penumpang dengan pelayanan yang ramah, sabar, rapi, dan selalu tepat waktu.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="desktop-right-column">
+                <section class="section calendar-section">
+                    <h2 class="section-title">Ketersediaan Jadwal</h2>
+                    <div class="card calendar-card">
+                        <div class="cal-header">
+                            <button type="button" id="frontCalPrev" aria-label="Bulan sebelumnya"><i
+                                    class="fa-solid fa-chevron-left"></i></button>
+                            <span id="frontCalMonthYear">Maret 2026</span>
+                            <button type="button" id="frontCalNext" aria-label="Bulan selanjutnya"><i
+                                    class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                        <div class="cal-days-header">
+                            <div>Min</div>
+                            <div>Sen</div>
+                            <div>Sel</div>
+                            <div>Rab</div>
+                            <div>Kam</div>
+                            <div>Jum</div>
+                            <div>Sab</div>
+                        </div>
+                        <div class="cal-grid" id="frontCalGrid">
+                        </div>
+                        <div class="cal-legend">
+                            <div class="legend-item"><span class="legend-box available"></span> Tersedia</div>
+                            <div class="legend-item"><span class="legend-box blocked"></span> Terisi</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section booking-section">
+                    <h2 class="section-title">Jadwalkan Perjalanan</h2>
+                    <div class="card booking-card">
+                        <form id="bookingForm" class="booking-form">
+                            <div class="form-group">
+                                <label for="namaLengkap">Nama Lengkap</label>
+                                <input type="text" id="namaLengkap" placeholder="Masukkan nama Anda" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="tglMulai">
+                                        <i class="fa-regular fa-calendar"
+                                            style="color:var(--accent-icon);margin-right:5px;"></i>
+                                        Tanggal Mulai
+                                    </label>
+                                    <input type="date" id="tglMulai" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tglSelesai">
+                                        <i class="fa-regular fa-calendar"
+                                            style="color:var(--accent-icon);margin-right:5px;"></i>
+                                        Tanggal Selesai
+                                    </label>
+                                    <input type="date" id="tglSelesai" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="jamMulai">
+                                        <i class="fa-regular fa-clock"
+                                            style="color:var(--accent-icon);margin-right:5px;"></i>
+                                        Jam Keberangkatan
+                                    </label>
+                                    <input type="time" id="jamMulai" required value="08:00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="jamSelesai">
+                                        <i class="fa-regular fa-clock"
+                                            style="color:var(--accent-icon);margin-right:5px;"></i>
+                                        Estimasi Jam Selesai
+                                    </label>
+                                    <input type="time" id="jamSelesai" required value="17:00">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lokasi">Titik Keberangkatan</label>
+                                <div class="input-gps-wrapper">
+                                    <input type="text" id="lokasi" name="lokasi"
+                                        placeholder="Cari atau gunakan lokasi saat ini..." required>
+                                    <button type="button" id="btnGPS" class="btn-gps" title="Gunakan lokasi GPS saya">
+                                        <i class="fa-solid fa-location-crosshairs"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="adminTujuan">Pilih Admin yang Dihubungi</label>
+                                <div class="select-wrapper">
+                                    <select id="adminTujuan" required>
+                                        <option value="6281227539199" selected>Admin 1 (Ibu Ratih)</option>
+                                        <option value="6281226089112">Admin 2 (Bramastha)</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down select-icon"></i>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-whatsapp">
+                                <i class="fa-brands fa-whatsapp"></i> Jadwalkan Perjalanan Anda
+                            </button>
+                            <p class="payment-disclaimer">Pembayaran aman dilakukan setelah konfirmasi jadwal melalui
+                                WhatsApp.</p>
+                        </form>
+                    </div>
+                </section>
+            </div>
         </main>
 
         <footer class="footer">
-            <div class="footer-logo">Anterin.</div>
+            <div class="footer-logo">Anterin</div>
             <p>&copy; 2026 Anterin Semarang.</p>
         </footer>
     </div>
+
+    <div id="lightboxOverlay" class="lightbox-overlay hidden">
+        <div class="lightbox-content">
+            <button id="lightboxClose" class="lightbox-close" aria-label="Tutup Galeri"><i
+                    class="fa-solid fa-xmark"></i></button>
+            <div class="lightbox-slider">
+                <img src="images/zenix_interior_1_1774862432944.png" alt="Interior Zenix Dashboard"
+                    class="lightbox-img active">
+                <img src="images/zenix_interior_2_1774862449142.png" alt="Interior Zenix VIP Seats"
+                    class="lightbox-img">
+                <img src="images/zenix_interior_3_1774862465536.png" alt="Interior Zenix Bagasi" class="lightbox-img">
+            </div>
+            <button id="lightboxPrev" class="lightbox-nav prev" aria-label="Gambar Sebelumnya"><i
+                    class="fa-solid fa-chevron-left"></i></button>
+            <button id="lightboxNext" class="lightbox-nav next" aria-label="Gambar Selanjutnya"><i
+                    class="fa-solid fa-chevron-right"></i></button>
+            <div class="lightbox-indicators">
+                <span class="indicator active"></span>
+                <span class="indicator"></span>
+                <span class="indicator"></span>
+            </div>
+        </div>
+    </div>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxYFW-fpeOb8gJOY18q_jWLrA4qBCPTKI&libraries=places&callback=initGooglePlaces"
+        async defer></script>
     <script src="script.js"></script>
 </body>
 
