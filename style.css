@@ -818,3 +818,151 @@ input:focus, select:focus {
     border: 1px solid rgba(200, 90, 61, 0.4);
 }
 
+/* ========================================================= */
+/* DESKTOP RESPONSIVE LAYOUT (WIDESCREEN 2-COLUMN)           */
+/* ========================================================= */
+@media (min-width: 900px) {
+    .app-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+    }
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 480px;
+        position: relative;
+        padding: 40px 0;
+    }
+
+    .header {
+        padding: 24px 60px;
+    }
+
+    /* Column 1 */
+    .desktop-left-column {
+        padding: 0 40px 0 60px;
+        border-right: 1px solid var(--border-color);
+    }
+
+    /* Column 2 */
+    .desktop-right-column {
+        padding: 0 40px 0 40px;
+        position: sticky;
+        top: 100px;
+        align-self: flex-start;
+        height: auto;
+    }
+
+    /* Reset default mobile section padding since columns provide padding */
+    .section {
+        padding: 0 0 40px 0;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 24px;
+    }
+
+    /* Typography & Hero Scaling */
+    .main-hero-title {
+        font-size: 3.25rem;
+        text-align: left;
+        line-height: 1.15;
+    }
+
+    .main-hero-subtitle {
+        text-align: left;
+        margin: 0;
+        font-size: 1.1rem;
+        max-width: 500px;
+    }
+
+    .greeting-wrapper {
+        text-align: left;
+        margin-bottom: 12px;
+    }
+    
+    .dynamic-greeting {
+        font-size: 1rem;
+    }
+
+    .hero-header-text {
+        padding: 0;
+        text-align: left;
+        margin-bottom: 60px;
+    }
+
+    /* Car Image Scaling */
+    .immersive-image-container {
+        align-items: center;
+        margin-bottom: 60px;
+    }
+
+    .photo-blend-wrapper {
+        max-width: 600px; 
+    }
+
+    .hero-img-blended {
+        max-width: 600px;
+        transform: translateY(20px);
+    }
+
+    .floating-detail-tag {
+        margin-top: 10px;
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+
+    .tanya-foto-wrapper {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+
+    .strict-rule-badge {
+        margin: 0 auto 40px auto;
+        max-width: 450px;
+    }
+
+    /* Enhancing Grid items to stretch horizontally */
+    .specs-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    .price-card {
+        padding: 24px;
+    }
+
+    .spec-item {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 24px 16px;
+        gap: 16px;
+    }
+
+    .spec-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+
+    /* Onboarding Overlay Laptop centering */
+    .onboarding-overlay {
+        max-width: 1200px;
+        border-radius: 24px;
+        margin: 40px auto;
+        height: calc(100vh - 80px);
+        bottom: auto;
+    }
+    
+    .slide-icon {
+        width: 180px;
+        height: 180px;
+        font-size: 7rem;
+    }
+}
