@@ -11,22 +11,23 @@ const {
     getStats
 } = require('../db/database');
 
-// Simple admin password (change this!)
+// Admin Password: Priority to Vercel Environment Variable
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'anterin2026';
 
-// Middleware: check admin auth via query param or header
+// Middleware: Autentikasi Admin via Query atau Headers
 const authCheck = (req, res, next) => {
     const password = req.query.pw || req.headers['x-admin-password'];
+    
     if (password === ADMIN_PASSWORD) {
-        next();
-    } else {
-        // If it's a page request, show login form
-        if (req.accepts('html')) {
-            res.sendFile(path.join(__dirname, '..', 'admin', 'login.html'));
-        } else {
-            res.status(401).json({ success: false, error: 'Unauthorized' });
-        }
+        return next();
     }
+    
+    // Kegagalan Autentikasi
+    if (req.accepts('html')) {
+        return res.sendFile(path.join(__dirname, '..', 'admin', 'login.html'));
+    }
+    
+    res.status(401).json({ success: false, error: 'Unauthorized Access. Password diperlukan.' });
 };
 
 // GET /admin — serve admin dashboard

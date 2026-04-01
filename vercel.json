@@ -9,7 +9,7 @@
           "style.css",
           "script.js",
           "index.html",
-          "foto_mobil.png",
+          "images/**",
           "admin/**/*.html",
           "admin/**/*.css",
           "admin/**/*.js"

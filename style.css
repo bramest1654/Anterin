@@ -32,32 +32,34 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme="dark"] {
-    /* Dark Mode Variables (Midnight Navy + Gold) */
-    --bg-main: #060B1E; /* Midnight Ocean */
-    --bg-app: #0A1128;  /* Deep Navy */
-    --bg-card: #141F45; /* Elevated Navy */
-    --text-primary: #FFFFFF;
-    --text-secondary: #94A3B8; 
-    
-    --accent-sage: #FCD34D; /* Luminous Gold */
-    --accent-sage-hover: #FBBF24;
-    --accent-sage-light: rgba(252, 211, 77, 0.15);
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Dark Mode Variables (Midnight Navy + Gold) */
+        --bg-main: #060B1E; /* Midnight Ocean */
+        --bg-app: #0A1128;  /* Deep Navy */
+        --bg-card: #141F45; /* Elevated Navy */
+        --text-primary: #FFFFFF;
+        --text-secondary: #94A3B8; 
+        
+        --accent-sage: #FCD34D; /* Luminous Gold */
+        --accent-sage-hover: #FBBF24;
+        --accent-sage-light: rgba(252, 211, 77, 0.15);
 
-    /* Smart icon/label accent: Gold on navy = high contrast */
-    --accent-icon: #FCD34D;
-    
-    --border-color: #1E293B;
-    
-    --alert-bg: #0F1A3A;
-    --alert-text: #E2E8F0;
-    --alert-icon-bg: #1E293B;
+        /* Smart icon/label accent: Gold on navy = high contrast */
+        --accent-icon: #FCD34D;
+        
+        --border-color: #1E293B;
+        
+        --alert-bg: #0F1A3A;
+        --alert-text: #E2E8F0;
+        --alert-icon-bg: #1E293B;
 
-    --brand-whatsapp: #25D366;
-    --brand-whatsapp-hover: #1EBE5A;
-    
-    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 15px rgba(252, 211, 77, 0.1);
+        --brand-whatsapp: #25D366;
+        --brand-whatsapp-hover: #1EBE5A;
+        
+        --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 15px rgba(252, 211, 77, 0.1);
+    }
 }
 
 * {
@@ -164,8 +166,12 @@ body {
 }
 
 /* Fallback for rgb rgba variable issue */
-[data-theme="light"] .header { background-color: rgba(255, 255, 255, 0.95); }
-[data-theme="dark"] .header { background-color: rgba(10, 17, 40, 0.95); /* Deep Navy Blur */ }
+@media (prefers-color-scheme: light) {
+    .header { background-color: rgba(255, 255, 255, 0.95); }
+}
+@media (prefers-color-scheme: dark) {
+    .header { background-color: rgba(10, 17, 40, 0.95); /* Deep Navy Blur */ }
+}
 
 .brand-container {
     display: flex;
@@ -257,29 +263,29 @@ body {
 .dynamic-greeting {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--accent-icon); /* Navy on light, Gold on dark — adaptive contrast */
+    color: #000000; /* Default Light Mode: Black */
     text-transform: uppercase;
     letter-spacing: 0.8px;
     display: block;
-}
-
-.dynamic-greeting-sub {
-    display: block;
-    font-size: 1.1rem;
-    font-weight: 500;
-    font-style: normal;
-    color: var(--accent-icon); /* Navy on light, Gold on dark — adaptive contrast */
-    letter-spacing: 0.5px;
-    margin-top: 6px;
-    opacity: 1;
+    transition: color 0.3s ease;
 }
 
 .main-hero-title {
-    font-size: 2rem;
-    line-height: 1.25;
+    font-size: 2.5rem;
+    line-height: 1.1;
     margin-bottom: 12px;
     font-weight: 800;
-    color: var(--text-primary);
+    color: #000000; /* Bold Black in Light Mode */
+    transition: color 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .dynamic-greeting {
+        color: #ffffff; /* White in Dark Mode */
+    }
+    .main-hero-title {
+        color: #EAB308; /* Premium Gold in Dark Mode */
+    }
 }
 
 .main-hero-subtitle {
@@ -330,16 +336,20 @@ body {
     font-size: 0.75rem;
     font-weight: 700;
     padding: 8px 18px;
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 10;
-    white-space: nowrap;
+    transition: all 0.3s ease;
+    cursor: default;
 }
 
-[data-theme="dark"] .floating-detail-tag {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+.floating-detail-tag:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.25);
+    border-color: var(--accent-sage);
+}
+
+@media (prefers-color-scheme: dark) {
+    .floating-detail-tag {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
 }
 
 .tanya-foto-wrapper {
@@ -382,6 +392,14 @@ body {
     align-items: center;
     gap: 16px;
     box-shadow: 0 4px 16px rgba(192, 57, 43, 0.3);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.strict-rule-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(192, 57, 43, 0.5);
+    background-color: #E74C3C; /* Slightly lighter red on hover */
 }
 
 .badge-icon {
@@ -438,45 +456,61 @@ body {
     color: var(--accent-icon); /* Navy on light, Gold on dark */
 }
 
-.specs-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.spec-item {
-    background-color: var(--bg-app);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 16px;
+/* Reasons Section (Why Choose Us) */
+.reasons-grid {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.spec-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15); /* Gold hover glow */
+.reason-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--bg-card);
+    padding: 16px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.reason-item:hover {
     border-color: var(--accent-sage);
-    background-color: var(--bg-card); /* slight bright bump */
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
-.spec-icon {
-    color: var(--accent-icon); /* Navy on light, Gold on dark */
-    background-color: var(--accent-sage-light);
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+.reason-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-sage-light);
+    color: #111827; /* Dark icon for Light Mode */
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: 1.25rem;
+    flex-shrink: 0;
 }
 
-.spec-item span {
-    font-size: 0.9rem;
-    font-weight: 600;
+@media (prefers-color-scheme: dark) {
+    .reason-icon {
+        color: #EAB308; /* Gold icon for Dark Mode */
+    }
+}
+
+.reason-content h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.reason-content p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin: 0;
 }
 
 /* Driver Profile */
@@ -551,13 +585,36 @@ body {
     border-left: 3px solid var(--accent-sage);
 }
 
-[data-theme="dark"] .driver-desc p {
-    background-color: rgba(255,255,255,0.02);
+@media (prefers-color-scheme: dark) {
+    .driver-desc p {
+        background-color: rgba(255,255,255,0.02);
+    }
 }
 
 /* Booking Section */
 .form-group {
     margin-bottom: 16px;
+    position: relative;
+}
+
+.validation-error {
+    color: #ef4444;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 4px;
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.btn-warning-state {
+    background-color: #f59e0b !important;
+    background-image: none !important;
+    box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.39) !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* GPS Input Wrapper */
@@ -606,6 +663,65 @@ body {
     50% { transform: scale(0.95); }
 }
 
+/* Segmented Control (Rental Type Toggle) */
+.segmented-control {
+    display: flex;
+    background: var(--bg-main);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.segment-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.segment-btn.active {
+    background: var(--accent-sage);
+    color: #000;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Dynamic Price Card */
+.dynamic-price-card {
+    background: var(--accent-sage-light);
+    border: 1px solid var(--accent-sage);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.price-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-icon);
+    transition: opacity 0.2s ease;
+}
+
+.hidden-field {
+    display: none !important;
+}
+
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -645,24 +761,26 @@ input[type="time"] {
     color-scheme: dark; /* Force dark native time picker */
 }
 
-[data-theme="light"] input[type="time"] {
-    color-scheme: light;
+@media (prefers-color-scheme: light) {
+    input[type="time"] { color-scheme: light; }
 }
 
-/* Light Mode: ikon jam default gelap (kontras di atas putih) */
-[data-theme="light"] input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: none; /* biarkan gelap natural */
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
+@media (prefers-color-scheme: light) {
+    input[type="time"]::-webkit-calendar-picker-indicator {
+        filter: none; /* biarkan gelap natural */
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+    }
 }
 
-/* Dark Mode: ikon jam Gold (kontras di atas navy) */
-[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(75%) sepia(50%) saturate(500%) hue-rotate(10deg) brightness(1.1);
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
+@media (prefers-color-scheme: dark) {
+    input[type="time"]::-webkit-calendar-picker-indicator {
+        filter: invert(75%) sepia(50%) saturate(500%) hue-rotate(10deg) brightness(1.1);
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.2s ease;
+    }
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator:hover {
@@ -753,8 +871,8 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
     cursor: pointer;
 }
 
-[data-theme="dark"] ::-webkit-calendar-picker-indicator {
-    filter: invert(0.8);
+@media (prefers-color-scheme: dark) {
+    ::-webkit-calendar-picker-indicator { filter: invert(0.8); }
 }
 
 /* Onboarding Overlay */
@@ -952,10 +1070,10 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .cal-day.blocked {
-    background: var(--alert-bg);
-    color: var(--alert-text);
-    border-color: rgba(200, 90, 61, 0.4);
-    font-weight: 600;
+    background: #EF4444;
+    color: #FFF;
+    border: none;
+    font-weight: 700;
 }
 .cal-day.available {
     border-color: var(--border-color);
@@ -1006,8 +1124,8 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .legend-box.blocked {
-    background: var(--alert-bg);
-    border: 1px solid rgba(200, 90, 61, 0.4);
+    background: #EF4444;
+    border: none;
 }
 
 /* ========================================================= */
@@ -1243,27 +1361,20 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
     }
 
     /* Enhancing Grid items to stretch horizontally */
-    .specs-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
+    .reasons-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
     }
 
-    .price-card {
+    .reason-item {
         padding: 24px;
     }
 
-    .spec-item {
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        padding: 24px 16px;
-        gap: 16px;
-    }
-
-    .spec-icon {
-        width: 48px;
-        height: 48px;
-        font-size: 1.25rem;
+    .reason-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 1.5rem;
     }
 
     /* Onboarding Overlay Laptop centering */
@@ -1319,15 +1430,16 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
     filter: invert(70%) sepia(10%) saturate(500%) hue-rotate(200deg);
 }
 
-/* Light Mode override */
-[data-theme="light"] .pac-container {
-    background-color: #FFFFFF;
-    border-color: #E2E8F0;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+@media (prefers-color-scheme: light) {
+    .pac-container {
+        background-color: #FFFFFF;
+        border-color: #E2E8F0;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+    }
+    .pac-item { color: #0F172A; border-top-color: #F1F5F9; }
+    .pac-item:hover,
+    .pac-item-selected { background-color: rgba(212, 175, 55, 0.08); }
 }
-[data-theme="light"] .pac-item { color: #0F172A; border-top-color: #F1F5F9; }
-[data-theme="light"] .pac-item:hover,
-[data-theme="light"] .pac-item-selected { background-color: rgba(212, 175, 55, 0.08); }
 
 /* Hide 'Powered by Google' footer in dropdown */
 .pac-container:after { display: none !important; }

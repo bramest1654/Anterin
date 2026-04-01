@@ -2,7 +2,34 @@
 const params = new URLSearchParams(window.location.search);
 const PW = params.get('pw');
 
+// Security Guard: Check if PW exists
+if (!PW) {
+    window.location.href = '/admin/login.html';
+}
+
 const API = (path) => `/admin/api${path}?pw=${PW}`;
+
+// --- Dynamic Greeting ---
+function updateGreeting() {
+    const hours = new Date().getHours();
+    const greetingEl = document.getElementById('adminGreeting');
+    let msg = 'Selamat Malam';
+    
+    if (hours >= 5 && hours < 11) msg = 'Selamat Pagi';
+    else if (hours >= 11 && hours < 15) msg = 'Selamat Siang';
+    else if (hours >= 15 && hours < 18) msg = 'Selamat Sore';
+    
+    greetingEl.innerHTML = `${msg}, <span style="color:var(--accent-gold)">Admin Anterin!</span>`;
+}
+
+// --- Logout ---
+document.getElementById('btnLogout').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (confirm('Apakah Anda yakin ingin keluar?')) {
+        sessionStorage.clear();
+        window.location.href = '/';
+    }
+});
 
 // --- Stats ---
 async function loadStats() {
@@ -122,12 +149,12 @@ async function loadBookings() {
         const data = await res.json();
 
         if (!data.bookings || data.bookings.length === 0) {
-            container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-inbox" style="font-size:2rem;margin-bottom:12px;display:block;color:#555"></i>Belum ada booking.</div>';
+            container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-inbox" style="font-size:2rem;margin-bottom:12px;display:block;color:var(--text-secondary)"></i>Belum ada booking.</div>';
             return;
         }
 
         container.innerHTML = data.bookings.map(b => `
-            <div class="booking-card" data-id="${b.id}">
+            <div class="booking-card">
                 <div class="booking-row-top">
                     <span class="booking-name">${b.nama}</span>
                     <span class="badge ${b.status}">${b.status}</span>
@@ -135,9 +162,11 @@ async function loadBookings() {
                 <div class="booking-details">
                     <span><i class="fa-solid fa-calendar"></i> ${b.tgl_mulai} s/d ${b.tgl_selesai}</span>
                     <span><i class="fa-solid fa-location-dot"></i> ${b.lokasi_jemput}</span>
+                    <span><i class="fa-solid fa-phone"></i> ${b.whatsapp || '-'}</span>
                 </div>
                 <div class="booking-actions">
-                    ${statusButtons(b.id, b.status)}
+                    ${b.status === 'pending' ? `<button class="status-btn active-status" onclick="setStatus(${b.id}, 'confirmed')"><i class="fa-solid fa-check"></i> Konfirmasi</button>` : ''}
+                    ${b.status !== 'cancelled' ? `<button class="status-btn cancel" onclick="setStatus(${b.id}, 'cancelled')"><i class="fa-solid fa-trash-can"></i> Batalkan</button>` : ''}
                 </div>
             </div>
         `).join('');
@@ -147,17 +176,6 @@ async function loadBookings() {
     }
 }
 
-function statusButtons(id, current) {
-    const statuses = ['pending', 'confirmed', 'done'];
-    let html = statuses.map(s =>
-        `<button class="status-btn ${s === current ? 'active-status' : ''}" onclick="setStatus(${id}, '${s}')">${s}</button>`
-    ).join('');
-    if (current !== 'cancelled') {
-        html += `<button class="status-btn cancel" onclick="setStatus(${id}, 'cancelled')"><i class="fa-solid fa-xmark"></i> Batal</button>`;
-    }
-    return html;
-}
-
 async function setStatus(id, status) {
     try {
         await fetch(API(`/bookings/${id}`), {
@@ -165,7 +183,6 @@ async function setStatus(id, status) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status })
         });
-        // Reload everything
         loadBookings();
         loadStats();
         renderCalendar();
@@ -178,6 +195,8 @@ async function setStatus(id, status) {
 window.setStatus = setStatus;
 
 // --- Init ---
+updateGreeting();
 loadStats();
 initCalendar();
 loadBookings();
+
