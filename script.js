@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showValidationUI() {
         if (errorTglMulai) {
             errorTglMulai.style.display = 'block';
-            errorTglMulai.textContent = 'Waduh, jadwal Innova Zenix kami sudah terisi pada tanggal ini. Silakan pilih tanggal lain atau diskusi jadwal alternatif via WA.';
+            errorTglMulai.textContent = 'Jadwal Innova Zenix kami sudah terisi pada tanggal ini. Mohon cek tanggal lain atau hubungi Admin untuk info ketersediaan selanjutnya.';
         }
         if (errorTglSelesai) {
             errorTglSelesai.style.display = 'block';
@@ -349,13 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (isScheduleFull) {
                 // ALTERNATIVE SCHEDULE MESSAGE (IF FULL)
-                waMessage = `Halo Admin Anterin! 👋
-Saya lihat jadwal Innova Zenix pada tanggal ${tglMulaiFormatted} s/d ${tglSelesaiFormatted} sudah penuh di web. 
-
-Mohon info jika ada saran tanggal kosong lainnya untuk unit Zenix ini.
-Nama saya: ${namaLengkap}
-
-Terima kasih! 🙏`;
+                waMessage = `Halo Admin Anterin! Saya lihat jadwal Innova Zenix pada tanggal ${tglMulaiFormatted} s/d ${tglSelesaiFormatted} sudah penuh di web. Mohon info jika ada perubahan jadwal atau saran tanggal kosong lainnya untuk unit Zenix ini. Terima kasih!`;
             } else if (currentTipeSewa === 'harian') {
                 // DAILY DRAFT
                 const paketSewa = document.getElementById('paketSewa').value;
